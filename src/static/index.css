@@ -1,0 +1,29 @@
+* {
+    /* background-color: blue; */
+    /* border: 2px solid #000000; */
+}
+body {
+    /* background-color: rgba(200,150, 25,0.8); */
+    background-color: #000000;
+}
+
+
+.content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    grid-auto-rows: 200px;
+    grid-template-areas:
+        ". a a ."
+        ". a a .";
+}
+
+.login {
+    
+    border: 2px solid #000000;
+    border-radius: 25% 0% 25%   0%  ;
+    padding: 30px;
+    grid-area: a;
+    align-self: center;
+    justify-self: center;
+}

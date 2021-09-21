@@ -9,7 +9,7 @@ mongo = PyMongo(app)
 
 @app.route('/', methods=['GET'])
 def main():
-    return render_template("main/index.html")
+    return render_template("index.html")
 
 
 @app.route('/criar_usuario', methods=['POST'])
@@ -35,7 +35,7 @@ def criar_usuario():
     else:
         { 'message': 'create new user ... failed ...' }
 
-    return { 'message': 'create new user ... failed ...' }
+
 
 
 if __name__ == "__main__":
