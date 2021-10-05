@@ -11,7 +11,12 @@ mongo = PyMongo(app)
 Bootstrap(app)
 
 # PAGINA DE LOGIN URL PADRÃO
+
 @app.route('/', methods=['GET'])
+def defaul():
+    return redirect(url_for('login'),code=302)
+
+@app.route('/login', methods=['GET'])
 def main():
     return render_template("login/index.html")
 
@@ -30,9 +35,9 @@ def autenticar():
                 flash('Digite seu e-mail corretamente.')
             if senha:
                 flash('Senha incorreta. Tente novamente ou clique em "Esqueceu a senha?" para redefini-la.')
-            return 
+            return redirect(url_for('login'),code=302)
     
-    return 
+    return redirect(url_for('login'),code=302)
 
 
 @app.route('/cadastrar', methods=['GET'])
@@ -66,6 +71,7 @@ def criar_usuario():
                 'cpf': cpf,
                 'data_nasc': data_nasc,
                 'usuario':usuario, 
+                'status': 'USUARIO_ATIVO',
                 'senha':senha_hash
                 })
             # response = {
