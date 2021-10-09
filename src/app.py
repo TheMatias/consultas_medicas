@@ -26,9 +26,12 @@ def autenticar():
     
     email = request.form['email']
     senha = request.form['senha']
+    senha_hash = generate_password_hash(senha)
+    usuario = mongo.db.usuarios.find_one_or_404({"email":str(email)})
+    print(usuario)
 
     if request.method == 'POST':
-        if email =='admin' and senha =='admin':
+        if usuario:
             return redirect(url_for('dashboard'),code=302)
         else:
             if email:
