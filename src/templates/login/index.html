@@ -14,9 +14,10 @@
     <title>Haplife</title>
     
 </head>
-<body>
+<body background="{{ url_for('static', filename='btm.jpg') }}">
     <div class="content">
-        <div class="card login">
+      <h1>Haplife</h1>
+      <div class="card login">
             
             <form action="{{ url_for('autenticar') }}" method="POST">
               <div class="form-floating mb-3">

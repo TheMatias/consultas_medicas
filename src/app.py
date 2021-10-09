@@ -12,11 +12,11 @@ Bootstrap(app)
 
 # PAGINA DE LOGIN URL PADRÃO
 
-@app.route('/', methods=['GET'])
-def defaul():
-    return redirect(url_for('login'),code=302)
+# @app.route('/')
+# def defaul():
+#     return redirect(url_for('login'),code=302)
 
-@app.route('/login', methods=['GET'])
+@app.route('/', methods=['GET'])
 def main():
     return render_template("login/index.html")
 
@@ -51,7 +51,7 @@ def dashboard():
 
 
 
-@app.route('/criar_usuario', methods=['POST'])
+@app.route('/criar_usuario', methods=['POST'])  
 def criar_usuario():
     nome = request.form['nome']
     email = request.form['email']
@@ -96,7 +96,7 @@ def criar_usuario():
         else:
             return render_template(
                 "login/index.html",
-                msg='create new user ... failed ...' 
+                msg='create new user ... failed ...'
                 )
     else:
         return
