@@ -1,24 +1,25 @@
-
 from flask import Flask, render_template, request, redirect, url_for, flash, session, abort
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_pymongo import PyMongo
+
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 app.secret_key = 'flask'
-app.config['MONGO_URI']='mongodb://localhost/consultas_medicas'
-mongo = PyMongo(app)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://matias:m4t14s@localhost:5432/consults'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+db.init_app(app)
+migrate = Migrate(app, db)
+
+
 Bootstrap(app)
 
-# PAGINA DE LOGIN URL PADRÃO
-
-# @app.route('/')
-# def defaul():
-#     return redirect(url_for('login'),code=302)
-
 @app.route('/', methods=['GET'])
-def main():
-    return render_template("login/index.html")
+def default():
+    return render_template("login/login.html")
 
 # AUTENTITACAO DE LOGIN
 @app.route('/autenticar', methods=['POST'])
@@ -27,11 +28,10 @@ def autenticar():
     email = request.form['email']
     senha = request.form['senha']
     senha_hash = generate_password_hash(senha)
-    usuario = mongo.db.usuarios.find_one_or_404({"email":str(email)})
-    print(usuario)
+
 
     if request.method == 'POST':
-        if usuario:
+        if "usuario":
             return redirect(url_for('dashboard'),code=302)
         else:
             if email:
@@ -57,8 +57,8 @@ def dashboard():
 @app.route('/criar_usuario', methods=['POST'])  
 def criar_usuario():
     nome = request.form['nome']
-    email = request.form['email']
     cpf = request.form['cpf']
+    email = request.form['email']
     data_nasc = request.form['data_nasc']
     usuario = request.form['usuario']
     senha = request.form['senha']
@@ -68,24 +68,6 @@ def criar_usuario():
         if nome and cpf and data_nasc and usuario and email and senha and senha == senha2:
             senha_hash = generate_password_hash(senha)
 
-            id = mongo.db.usuarios.insert({
-                'nome': nome,
-                'email': email, 
-                'cpf': cpf,
-                'data_nasc': data_nasc,
-                'usuario':usuario, 
-                'status': 'USUARIO_ATIVO',
-                'senha':senha_hash
-                })
-            # response = {
-            #     'id': str(id),
-            #     'nome': nome,
-            #     'email': email, 
-            #     'cpf': cpf,
-            #     'data_nasc': data_nasc,
-            #     'usuario':usuario, 
-            #     'senha':senha_hash
-            # }
             return render_template(
                 'dashboard/perfil.html',
                 id = str(id),
@@ -98,7 +80,7 @@ def criar_usuario():
             )
         else:
             return render_template(
-                "login/index.html",
+                "login/login.html",
                 msg='create new user ... failed ...'
                 )
     else:
