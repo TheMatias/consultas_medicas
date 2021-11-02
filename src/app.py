@@ -3,19 +3,17 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 app.secret_key = 'flask'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://matias:m4t14s@localhost:5432/consults'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:arduino@localhost:5432/consults'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 db.init_app(app)
 migrate = Migrate(app, db)
 
 
-Bootstrap(app)
 
 @app.route('/', methods=['GET'])
 def default():
@@ -27,7 +25,7 @@ def autenticar():
     
     email = request.form['email']
     senha = request.form['senha']
-    senha_hash = generate_password_hash(senha)
+    senha_hash = generate_password_hash(senha)  
 
 
     if request.method == 'POST':
