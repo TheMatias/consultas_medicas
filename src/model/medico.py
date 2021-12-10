@@ -4,12 +4,13 @@ db = SQLAlchemy()
 
 class Medico(db.model):
     __tablename__ =  "medicos"
-    nome = db.Column(db.String(30), nullable=False)
-    sobrenome = db.Column(db.String(30), nullable=False)
-    idade = db.Column(db.Integer(), nullable=False)
-    data_nasc = db.Column(db.DateTime(), nullable=False)
-    endereço = db.Column(db.String(100), nullable=False)
+    id_medico = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(80), nullable=False)
+    cpf = db.Column(db.String(11), nullable=False)
+    data_nasc = db.Column(db.DateTime, nullable=False)
+    crm = db.Column(db.String(30), nullable=False)
     telefone = db.Column(db.String(30), nullable=False)
+    
 
     def __init__(self, nome, sobrenome, idade, data_nasc, endereco, telefone):
         self.nome = nome

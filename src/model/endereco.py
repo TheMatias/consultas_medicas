@@ -4,10 +4,12 @@ db = SQLAlchemy()
 
 class Endereco(db.Model):
     __tablename__ = "enderecos"
-    id = db.Column(db.Integer(), primary_key = True)
+    id_endereco = db.Column(db.Integer(), primary_key = True)
     cep = db.Column(db.String(30), nullable = False)
+    estado = db.Column(db.String(40), nullable = False)
+    cidade = db.Column(db.String(50), nullable = False)
     logradouro = db.Column(db.String(150), nullable = False)
-    numero = db.Column(db.Integer(), nullable = False)
+    numero = db.Column(db.Integer, nullable = False)
 
     def __init__(self, cep:str, logradouro:str, numero:int) -> None:
         super().__init__()
