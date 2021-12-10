@@ -23,7 +23,7 @@ class Paciente(db.Model):
 
     
 # modelo de medico
-class Medico(db.model):
+class Medico(db.Model):
     __tablename__ =  "medicos"
     id_medico = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(80), nullable=False)
@@ -81,7 +81,7 @@ class Especialidade(db.Model):
 
 
 # modelo de consultas
-class Consulta(db.model):
+class Consulta(db.Model):
     __tablename__ = "consultas"
     id = db.Column(db.Integer(), primary_key = True)
     horario = db.Column(db.Time(), nullable=False)
