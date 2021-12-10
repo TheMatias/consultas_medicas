@@ -1,19 +1,17 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, abort
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-
+from models import db
 app = Flask(__name__)
 app.secret_key = 'flask'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:arduino@localhost:5432/consults'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+
+
 db.init_app(app)
 migrate = Migrate(app, db)
-
-
 
 @app.route('/', methods=['GET'])
 def default():
@@ -25,12 +23,12 @@ def autenticar():
     
     email = request.form['email']
     senha = request.form['senha']
-    senha_hash = generate_password_hash(senha)  
+    senha_hash = generate_password_hash(senha)
 
 
     if request.method == 'POST':
         if "usuario":
-            return redirect(url_for('dashboard'),code=302)
+            return redirect(url_for('principal'),code=302)
         else:
             if email:
                 flash('Digite seu e-mail corretamente.')
@@ -45,12 +43,9 @@ def autenticar():
 def cadastrarPaciente():
     return render_template('cadastro/cadastroPaciente.html')
 
-
-@app.route('/dashboard', methods=['GET'])
-def dashboard():
-    return render_template('dashboard/perfil.html')
-
-
+@app.route('/principal', methods=['GET'])
+def principal():
+    return render_template('principal/perfil.html')
 
 @app.route('/criar_usuario', methods=['POST'])  
 def criar_usuario():
